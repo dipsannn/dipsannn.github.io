@@ -1603,26 +1603,18 @@ a.cc-row:hover { transform: translateX(3px); }
     return g;
   }
   function drawLandmarks() {
-  /* Riyadh: Kingdom Centre + Al Faisaliah */
-  landmark('Kingdom Centre, Riyadh', 698, 318, 1.2,
+  /* Riyadh: Kingdom Centre */
+  landmark('Kingdom Centre, Riyadh', 702, 318, 1.25,
     'M-11,0 V-34 C-11,-52 -9.5,-64 -7.5,-74 L-4.6,-74 C-4.6,-62 -3.6,-52 0,-50 C3.6,-52 4.6,-62 4.6,-74 L7.5,-74 C9.5,-64 11,-52 11,-34 V0 Z',
     function (g) { el('path', { d: 'M-5,-70 H5', 'class': 'lm-a' }, g); },
     'M0,-50 V0 M-11,-12 H11 M-11,-24 H11');
-  landmark('Al Faisaliah Tower, Riyadh', 729, 318, 1.2,
-    'M-8,0 L-1.6,-56 L0,-74 L1.6,-56 L8,0 Z',
-    function (g) { el('circle', { cx: 0, cy: -47, r: 3.8, 'class': 'lm-g' }, g); },
-    'M-6.6,-12 L5.3,-24 M6.6,-12 L-5.3,-24 M-5,-28 L3.6,-38 M5,-28 L-3.6,-38');
-  el('path', { d: 'M681,318 H745', 'class': 'lm-gr' });
-  /* Dubai: Burj Khalifa + Burj Al Arab */
-  landmark('Burj Khalifa, Dubai', 966, 302, 1.08,
+  el('path', { d: 'M684,318 H720', 'class': 'lm-gr' });
+  /* Dubai: Burj Khalifa */
+  landmark('Burj Khalifa, Dubai', 972, 302, 1.12,
     'M-9,0 V-24 H-7 V-44 H-5 V-60 H-3.2 V-74 H-1.6 V-86 H-0.6 L0,-110 L0.6,-90 H1.4 V-80 H2.8 V-66 H4.2 V-50 H6 V-32 H8 V-14 H9 V0 Z',
     function (g) { el('path', { d: 'M0,-110 V-100', 'class': 'lm-a' }, g); },
     'M0,-86 V0');
-  landmark('Burj Al Arab, Dubai', 985, 302, 0.86,
-    'M-2,0 V-56 L-0.6,-62 V-50 C12,-44 18,-24 14,0 Z',
-    function (g) { el('circle', { cx: -0.6, cy: -62, r: 1.6, 'class': 'lm-g' }, g); },
-    'M-0.6,-50 V0 M-0.6,-38 C8,-34 12,-22 11,-8 M-0.6,-24 C5,-20 7,-12 7,-4');
-  el('path', { d: 'M954,302 H999', 'class': 'lm-gr' });
+  el('path', { d: 'M958,302 H986', 'class': 'lm-gr' });
   }
 
   var nb = el('g', { 'class': 'minor-g', transform: 'translate(980 422)' });

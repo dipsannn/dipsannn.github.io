@@ -538,6 +538,10 @@ footer { padding-block: 0 clamp(32px, 5vw, 56px); }
 .fd-bld .crn .cw { fill: var(--muted); }
 .fd-bld .crn .cab { fill: var(--accent); }
 .fd-bld .crn .hook { fill: none; stroke: var(--fg); stroke-width: 1.2; }
+.fd-bld .crn .trol { fill: var(--fg); opacity: 0.85; }
+.fd-bld .bimt { font: 700 26px/1 var(--font-display); letter-spacing: 0.02em; fill: var(--accent); stroke: var(--surface); stroke-width: 3; paint-order: stroke; opacity: 0; }
+.fd-bld .bimt.on { opacity: 1; }
+.fd-bld .bim.lit .bimt { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 70%, transparent)); }
 .fd-bld .lvl { stroke: var(--muted); stroke-width: 0.8; stroke-dasharray: 5 3; }
 .fd-bld .lvh { fill: var(--surface); stroke: var(--muted); stroke-width: 1; }
 .fd-bld .lvt { font: 500 8.5px var(--font-mono); fill: var(--muted); }
@@ -1261,9 +1265,6 @@ a.cc-row:hover { transform: translateX(3px); }
     L(cr, [mx + w / 2, my, top], apex); L(cr, apex, [1.45, my, top]); L(cr, apex, [mx - 0.7, my, top]);
     I.box(cr, mx - 0.72, my - 0.05, top - 0.32, mx - 0.46, my + 0.05, top - 0.02, 'cw');
     I.box(cr, mx + w, my - 0.06, top - 0.26, mx + w + 0.14, my + 0.06, top - 0.04, 'cab');
-    L(cr, [0.55, my, top - 0.05], [0.55, my, 4.75], 'cable');
-    var hk = P(0.55, my, 4.75);
-    mk('path', { d: 'M' + hk[0] + ',' + hk[1] + ' v4 a3 3 0 1 1 -3 3', 'class': 'hook' }, cr);
 
     /* foundation */
     var base = mk('g', { 'class': 'base' }, sv);
@@ -1321,6 +1322,60 @@ a.cc-row:hover { transform: translateX(3px); }
       brks.push({ g: g, at: firsts[i] });
     });
 
+    /* crane hook that sets the BIM letters on the roof */
+    var hg = mk('g', { 'class': 'crn' }, sv);
+    var trol = mk('rect', { width: 8, height: 4, 'class': 'trol' }, hg);
+    var cable = mk('line', { 'class': 'cable' }, hg);
+    var hook = mk('path', { 'class': 'hook' }, hg);
+    var TZ = top - 0.05, roofZ = 12 * H + 0.04, HOME = 0.55, HANG = 40;
+    var lettersG = mk('g', { 'class': 'bim' }, sv);
+    var LET = [['B', -0.42], ['I', 0], ['M', 0.42]].map(function (d) {
+      var t = mk('text', { 'class': 'bimt', 'text-anchor': 'middle' }, lettersG);
+      t.textContent = d[0];
+      var f = P(d[1], -0.1, roofZ);
+      return { el: t, x: d[1], fx: +f[0], fy: +f[1] };
+    });
+    function trolleyAt(x) { var q = P(x, my, TZ); return [+q[0], +q[1]]; }
+    function drawHook(tx, ty, hx, hy) {
+      trol.setAttribute('x', tx - 4); trol.setAttribute('y', ty - 2);
+      cable.setAttribute('x1', tx); cable.setAttribute('y1', ty); cable.setAttribute('x2', hx); cable.setAttribute('y2', hy);
+      hook.setAttribute('d', 'M' + hx.toFixed(1) + ',' + hy.toFixed(1) + ' v4 a3 3 0 1 1 -3 3');
+    }
+    function carry(l, hx, hy) { l.el.setAttribute('x', hx.toFixed(1)); l.el.setAttribute('y', (hy + 24).toFixed(1)); }
+    function homeHook() { var t = trolleyAt(HOME); drawHook(t[0], t[1], t[0], t[1] + HANG); }
+    function resetSign() { LET.forEach(function (l) { l.el.classList.remove('on', 'set'); }); lettersG.classList.remove('lit'); homeHook(); }
+    function placeAll() {
+      LET.forEach(function (l) { l.el.setAttribute('x', l.fx); l.el.setAttribute('y', l.fy); l.el.classList.add('on', 'set'); });
+      lettersG.classList.add('lit'); homeHook();
+    }
+    var sraf = 0;
+    function lerp(a, b, u) { return a + (b - a) * u; }
+    function ease(u) { return 0.5 - Math.cos(Math.PI * Math.max(0, Math.min(1, u))) / 2; }
+    function animateSign() {
+      cancelAnimationFrame(sraf); resetSign();
+      var per = 1500, t0 = performance.now();
+      (function step(n) {
+        var e = n - t0, i = Math.floor(e / per);
+        if (i >= LET.length) { placeAll(); return; }
+        var u = (e - i * per) / per, l = LET[i];
+        var h = trolleyAt(HOME), t = trolleyAt(l.x);
+        var tx, ty, hx, hy;
+        if (u < 0.3) {
+          var a = ease(u / 0.3); tx = lerp(h[0], t[0], a); ty = lerp(h[1], t[1], a); hx = tx; hy = ty + HANG;
+          l.el.classList.add('on'); carry(l, hx, hy);
+        } else if (u < 0.65) {
+          var b = ease((u - 0.3) / 0.35); tx = t[0]; ty = t[1]; hx = lerp(t[0], l.fx, b); hy = lerp(t[1] + HANG, l.fy - 24, b);
+          carry(l, hx, hy);
+        } else {
+          if (!l.el.classList.contains('set')) { l.el.setAttribute('x', l.fx); l.el.setAttribute('y', l.fy); l.el.classList.add('set'); }
+          var c = ease((u - 0.65) / 0.35); tx = lerp(t[0], h[0], c); ty = lerp(t[1], h[1], c);
+          hx = lerp(l.fx, tx, c); hy = lerp(l.fy - 24, ty + HANG, c);
+        }
+        drawHook(tx, ty, hx, hy);
+        sraf = requestAnimationFrame(step);
+      })(t0);
+    }
+
     var MN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     function label(m) { if (m >= M - 0.05) return 'Now'; var idx = 3 + Math.floor(m); return MN[idx % 12] + ' ' + (2023 + Math.floor(idx / 12)); }
     function set(m) {
@@ -1331,18 +1386,23 @@ a.cc-row:hover { transform: translateX(3px); }
     }
     var raf = 0;
     function play() {
-      cancelAnimationFrame(raf);
-      if (RM) { set(M); return; }
+      cancelAnimationFrame(raf); cancelAnimationFrame(sraf);
+      if (RM) { set(M); placeAll(); return; }
+      resetSign();
       var t0 = performance.now(), dur = 4800;
       (function step(n) {
         var u = Math.min(1, (n - t0) / dur);
         set(M * u);
-        if (u < 1) raf = requestAnimationFrame(step);
+        if (u < 1) raf = requestAnimationFrame(step); else animateSign();
       })(t0);
     }
-    r.addEventListener('input', function () { cancelAnimationFrame(raf); set(+r.value); });
+    r.addEventListener('input', function () {
+      cancelAnimationFrame(raf); cancelAnimationFrame(sraf);
+      var v = +r.value; set(v);
+      if (v >= M - 0.01) placeAll(); else resetSign();
+    });
     if (rp) rp.addEventListener('click', play);
-    set(M);
+    set(M); placeAll();
     if (!RM && 'IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (en) {
         if (en[0].isIntersecting) { io.disconnect(); play(); }

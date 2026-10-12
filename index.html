@@ -260,10 +260,14 @@ section { padding-block: clamp(56px, 8vw, 96px); scroll-margin-top: 120px; }
 .chips li { font: 500 12px/1 var(--font-mono); letter-spacing: 0.02em; padding: 7px 10px; border: 1px solid var(--line); background: var(--surface); border-radius: 2px; }
 .about .chips { margin-top: 24px; }
 .about-txt { min-width: 0; }
-.about .about-txt p { max-width: 70ch; font-size: 18px; line-height: 1.9; text-align: justify; hyphens: auto; }
+.about .about-txt p { max-width: 70ch; font-size: 18px; line-height: 1.9; text-align: justify; hyphens: manual; -webkit-hyphens: manual; }
 .about .about-txt p:first-child { text-indent: 2.5em; }
 .about .about-txt p + p { margin-top: 2px; }
 .about-txt b { font-weight: 700; }
+.about-txt.tw-on .tw { opacity: 0; }
+.about-txt.tw-on .tw.on { opacity: 1; }
+.about-txt .tw.cur::after { content: ""; display: inline-block; width: 2px; height: 1.05em; margin: 0 -3px 0 1px; vertical-align: -0.17em; background: var(--accent); animation: twc .8s steps(1) infinite; }
+@keyframes twc { 50% { opacity: 0; } }
 .badges { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; width: fit-content; max-width: 100%; margin-top: 32px; padding: 10px 14px; background: var(--plate); border-bottom: 2px solid var(--fg); border-radius: 2px; }
 .badges img { display: block; height: 56px; width: auto; max-width: 100%; }
 .photo::before { left: auto; right: -8px; border-left: 0; border-right: 2px solid var(--accent); }
@@ -1730,6 +1734,48 @@ a.cc-row:hover { transform: translateX(3px); }
   if (reduce) { cur = n - 1; setP(L[n - 1]); showCard(n - 1); }
   else { setP(0); showCard(0); schedule(); }
 })();
+/* ---- profile typewriter ---- */
+(function () {
+  var box = document.querySelector('.about-txt');
+  if (!box || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  var chars = [];
+  (function split(node) {
+    Array.prototype.slice.call(node.childNodes).forEach(function (c) {
+      if (c.nodeType === 3) {
+        var f = document.createDocumentFragment();
+        c.nodeValue.split(/(\s+)/).forEach(function (w) {
+          if (!w) return;
+          if (/^\s+$/.test(w)) { f.appendChild(document.createTextNode(w)); return; }
+          var word = document.createElement('span');
+          word.style.whiteSpace = 'nowrap';
+          for (var i = 0; i < w.length; i++) {
+            var sp = document.createElement('span'); sp.className = 'tw'; sp.textContent = w[i];
+            word.appendChild(sp); chars.push(sp);
+          }
+          f.appendChild(word);
+        });
+        c.parentNode.replaceChild(f, c);
+      } else if (c.nodeType === 1) split(c);
+    });
+  })(box);
+  box.classList.add('tw-on');
+  var done = false;
+  function run() {
+    if (done) return; done = true;
+    var dur = 4200, t0 = performance.now(), shown = 0, n = chars.length, last = null;
+    (function step(now) {
+      var k = Math.min(n, Math.ceil((now - t0) / dur * n));
+      for (; shown < k; shown++) chars[shown].classList.add('on');
+      if (last) last.classList.remove('cur');
+      last = chars[Math.max(0, k - 1)]; last.classList.add('cur');
+      if (k < n) requestAnimationFrame(step);
+      else setTimeout(function () { last.classList.remove('cur'); }, 1600);
+    })(t0);
+  }
+  var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); run(); } }, { threshold: 0.35 });
+  io.observe(box);
+})();
+
 </script>
 
 </body>

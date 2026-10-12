@@ -166,6 +166,12 @@ h1 { font: 700 clamp(52px, 7vw, 92px)/0.9 var(--font-display); letter-spacing: 0
 #map .nile.lake { stroke-width: 5; opacity: 0.45; }
 #map .icon { fill: none; stroke: var(--fg); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; opacity: 0.8; }
 #map .sbar { fill: var(--fg); opacity: 0.8; }
+#map .lmk { cursor: default; }
+#map .lm-b { fill: var(--surface); stroke: var(--fg); stroke-width: 1.5; stroke-linejoin: round; }
+#map .lm-l { fill: none; stroke: var(--fg); stroke-width: 0.8; opacity: 0.45; }
+#map .lm-a { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; }
+#map .lm-g { fill: var(--accent); stroke: var(--surface); stroke-width: 1; }
+#map .lm-gr { fill: none; stroke: var(--fg); stroke-width: 1.4; stroke-linecap: round; opacity: 0.6; }
 #map .route-base { fill: none; stroke: var(--muted); stroke-width: 2; stroke-dasharray: 3 7; stroke-linecap: round; opacity: 0.75; }
 #map .route-prog { fill: none; stroke: var(--accent); stroke-width: 3.2; stroke-linecap: round; }
 #map .mk-halo { fill: var(--accent); opacity: 0.2; }
@@ -185,7 +191,7 @@ h1 { font: 700 clamp(52px, 7vw, 92px)/0.9 var(--font-display); letter-spacing: 0
 .stn.cur .lbl { border-color: var(--accent); }
 .lbl.r { left: 26px; top: 50%; transform: translateY(-50%); }
 .lbl.b { top: 26px; left: 50%; transform: translateX(-50%); }
-.lbl.bl { top: 26px; right: 0; }
+.lbl.lb { top: 26px; right: 0; }
 .stn:hover .lbl { border-color: var(--fg); }
 
 /* stepper under the map */
@@ -1587,8 +1593,37 @@ a.cc-row:hover { transform: translateX(3px); }
   function icon(d, x, y, s) { el('path', { d: d, 'class': 'icon', transform: 'translate(' + x + ' ' + y + ') scale(' + (s || 1) + ')' }); }
   icon('M0,-8 L14,-14 L28,-8 L14,-2 Z M6,-5.5 V1 Q14,5 22,1 V-5.5 M28,-8 V0', 146, 72);
   icon('M-4,0 H54 M0,0 L17,-17 L34,0 M17,-17 L20,0 M26,0 L38,-11 L50,0', 126, 268);
-  icon('M0,0 C2,-30 6,-54 12,-62 C18,-54 22,-30 24,0 Z M5.5,-36 Q12,-56 18.5,-36 Z M-14,0 V-12 H-6 V0 M28,0 V-16 H36 V0 M-18,0 H40', 690, 306, 0.82);
-  icon('M0,0 V-14 H3 V-26 H5 V-40 H6.5 L7,-62 L7.5,-40 H9 V-26 H11 V-14 H14 V0 Z M-8,0 V-10 H-3 V0 M18,0 V-18 H24 V0 M-12,0 H28', 948, 300);
+  /* real landmarks: [shape, accent] in local units, base at y = 0 */
+  function landmark(name, x, y, sc, body, acc, extra) {
+    var g = el('g', { 'class': 'lmk', transform: 'translate(' + x + ' ' + y + ') scale(' + sc + ')' });
+    el('title', {}, g).textContent = name;
+    el('path', { d: body, 'class': 'lm-b' }, g);
+    if (extra) el('path', { d: extra, 'class': 'lm-l' }, g);
+    if (acc) acc(g);
+    return g;
+  }
+  function drawLandmarks() {
+  /* Riyadh: Kingdom Centre + Al Faisaliah */
+  landmark('Kingdom Centre, Riyadh', 698, 318, 1.2,
+    'M-11,0 V-34 C-11,-52 -9.5,-64 -7.5,-74 L-4.6,-74 C-4.6,-62 -3.6,-52 0,-50 C3.6,-52 4.6,-62 4.6,-74 L7.5,-74 C9.5,-64 11,-52 11,-34 V0 Z',
+    function (g) { el('path', { d: 'M-5,-70 H5', 'class': 'lm-a' }, g); },
+    'M0,-50 V0 M-11,-12 H11 M-11,-24 H11');
+  landmark('Al Faisaliah Tower, Riyadh', 729, 318, 1.2,
+    'M-8,0 L-1.6,-56 L0,-74 L1.6,-56 L8,0 Z',
+    function (g) { el('circle', { cx: 0, cy: -47, r: 3.8, 'class': 'lm-g' }, g); },
+    'M-6.6,-12 L5.3,-24 M6.6,-12 L-5.3,-24 M-5,-28 L3.6,-38 M5,-28 L-3.6,-38');
+  el('path', { d: 'M681,318 H745', 'class': 'lm-gr' });
+  /* Dubai: Burj Khalifa + Burj Al Arab */
+  landmark('Burj Khalifa, Dubai', 966, 302, 1.08,
+    'M-9,0 V-24 H-7 V-44 H-5 V-60 H-3.2 V-74 H-1.6 V-86 H-0.6 L0,-110 L0.6,-90 H1.4 V-80 H2.8 V-66 H4.2 V-50 H6 V-32 H8 V-14 H9 V0 Z',
+    function (g) { el('path', { d: 'M0,-110 V-100', 'class': 'lm-a' }, g); },
+    'M0,-86 V0');
+  landmark('Burj Al Arab, Dubai', 985, 302, 0.86,
+    'M-2,0 V-56 L-0.6,-62 V-50 C12,-44 18,-24 14,0 Z',
+    function (g) { el('circle', { cx: -0.6, cy: -62, r: 1.6, 'class': 'lm-g' }, g); },
+    'M-0.6,-50 V0 M-0.6,-38 C8,-34 12,-22 11,-8 M-0.6,-24 C5,-20 7,-12 7,-4');
+  el('path', { d: 'M954,302 H999', 'class': 'lm-gr' });
+  }
 
   var nb = el('g', { 'class': 'minor-g', transform: 'translate(980 422)' });
   el('path', { d: 'M0,0 V-34 M-6,-24 L0,-36 L6,-24 Z', 'class': 'icon' }, nb);
@@ -1604,7 +1639,7 @@ a.cc-row:hover { transform: translateX(3px); }
     { city: 'Mansoura', country: 'Egypt', lon: 31.38, lat: 31.04, yr: '2022', when: 'Jan 2022', role: 'Graduated in Civil Engineering', org: 'Delta Higher Institute for Engineering and Technology', side: 'r' },
     { city: 'Cairo', country: 'Egypt', lon: 31.24, lat: 30.04, yr: '2023', when: 'Apr 2023 to Sep 2024', role: 'Structural and Bridge BIM Engineer', org: 'El Soadaa Group', side: 'b' },
     { city: 'Riyadh', country: 'Saudi Arabia', lon: 46.68, lat: 24.71, yr: '2024', when: 'Sep 2024 to Feb 2026', role: 'Mid Level Structural BIM Engineer', org: 'Al Bawani', side: 'b' },
-    { city: 'Dubai', country: 'UAE', lon: 55.27, lat: 25.20, yr: '2026', when: 'Feb 2026 to now', role: 'BIM Coordinator', org: 'Al Kharafi', side: 'bl', now: true }
+    { city: 'Dubai', country: 'UAE', lon: 55.27, lat: 25.20, yr: '2026', when: 'Feb 2026 to now', role: 'BIM Coordinator', org: 'Al Kharafi', side: 'lb', now: true }
   ];
   var n = S.length;
   S.forEach(function (s) { s.p = P(s.lon, s.lat); });
@@ -1614,6 +1649,7 @@ a.cc-row:hover { transform: translateX(3px); }
   var dAll = segs.join(' ');
   el('path', { d: dAll, 'class': 'route-base' });
   var prog = el('path', { d: dAll, 'class': 'route-prog' });
+  drawLandmarks();
   var total = prog.getTotalLength();
   var L = [0];
   var tmp = el('path', { d: '', visibility: 'hidden' });

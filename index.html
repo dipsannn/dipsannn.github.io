@@ -115,40 +115,50 @@ ul { padding: 0; list-style: none; }
 .btn .arr { font-family: var(--font-mono); font-weight: 400; }
 
 /* ---------- hero ---------- */
-.hero { padding-block: clamp(40px, 7vw, 88px) clamp(40px, 6vw, 72px); }
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); gap: clamp(28px, 4vw, 52px); align-items: center; }
+.hero { padding-block: clamp(36px, 6vw, 76px) clamp(40px, 6vw, 72px); }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(28px, 4.5vw, 64px); align-items: center; }
 .eyebrow { font: 600 13px/1.7 var(--font-mono); letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); }
 .eyebrow { display: grid; gap: 2px; }
 .eyebrow .eb { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 10px; row-gap: 2px; }
 .eyebrow .eb > span { white-space: nowrap; }
 @media (max-width: 480px) { .eyebrow { font-size: 11.5px; letter-spacing: 0.04em; } .eyebrow .eb { column-gap: 7px; } }
 .eyebrow i { font-style: normal; font-weight: 400; color: var(--muted); opacity: 0.7; }
-h1 { font: 700 clamp(48px, 7.4vw, 96px)/0.9 var(--font-display); letter-spacing: 0.01em; text-transform: uppercase; text-wrap: balance; margin-top: 18px; }
-.lede { margin-top: 24px; max-width: 54ch; font-size: clamp(17px, 2vw, 19px); color: var(--muted); }
+h1 { font: 700 clamp(52px, 7vw, 92px)/0.9 var(--font-display); letter-spacing: 0.01em; text-transform: uppercase; text-wrap: balance; margin-top: 16px; }
+.lede { margin-top: 22px; font-size: clamp(16.5px, 1.6vw, 18.5px); color: var(--muted); text-wrap: pretty; max-width: 44ch; }
 .lede strong { color: var(--fg); font-weight: 500; }
-.lede2 { margin-top: 12px; }
-.lede { text-wrap: balance; max-width: 46ch; }
-.social { display: flex; gap: 12px; margin-top: 28px; }
-.social a { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); transition: background-color .2s, border-color .2s, color .2s, transform .2s; }
+.lede2 { margin-top: 10px; }
+.hact { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 28px; }
+.social { display: flex; gap: 10px; }
+.social a { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); transition: background-color .2s, border-color .2s, color .2s, transform .2s; }
 .social a:hover { background: var(--accent); border-color: var(--accent); color: var(--on-accent); transform: translateY(-2px); }
 .social svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .social svg .fill { fill: currentColor; }
-.cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; }
 .hint { margin-top: 14px; font: 400 12px/1.5 var(--font-mono); color: var(--muted); }
-/* career route map */
-.journey { min-width: 0; }
-.mapbox { position: relative; }
-.mapart { position: relative; aspect-ratio: 1000 / 541; max-width: 100%; border: 1px solid var(--line); background: var(--surface); overflow: hidden; }
-.mapart::before, .mapart::after { content: ""; position: absolute; z-index: 3; width: 14px; height: 14px; border: 2px solid var(--accent); pointer-events: none; }
-.mapart::before { top: 0; left: 0; border-right: 0; border-bottom: 0; }
-.mapart::after { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+/* career route panel */
+.journey { min-width: 0; position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 1px 0 var(--line), 0 24px 48px -32px color-mix(in srgb, var(--fg) 45%, transparent); }
+.journey::before, .journey::after { content: ""; position: absolute; z-index: 3; width: 14px; height: 14px; border: 2px solid var(--accent); pointer-events: none; }
+.journey::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; border-top-left-radius: 4px; }
+.journey::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; border-bottom-right-radius: 4px; }
+.jhead { display: flex; align-items: center; gap: 12px; padding: 10px 12px 10px 16px; border-bottom: 1px solid var(--line); }
+.jt { display: inline-flex; align-items: center; gap: 9px; font: 600 12px/1 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg); }
+.jt i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent); }
+.jr { margin-left: auto; font: 400 12px/1 var(--font-mono); letter-spacing: 0.04em; color: var(--muted); }
+.jplay { display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: var(--bg); color: var(--fg); cursor: pointer; transition: border-color .2s, color .2s; }
+.jplay:hover { border-color: var(--accent); color: var(--accent); }
+.jplay svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.jplay .pl { display: none; fill: currentColor; stroke-width: 1; }
+.jplay[aria-pressed="false"] .ps { display: none; }
+.jplay[aria-pressed="false"] .pl { display: block; }
+.mapart { position: relative; aspect-ratio: 900 / 430; overflow: hidden; background: var(--surface); }
 #map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 #map .land { fill: var(--surface); }
 #map .water { fill: var(--water); stroke: var(--coast); stroke-width: 1.3; stroke-linejoin: round; }
 #map .water-h { stroke: none; }
 #map .hatch { stroke: var(--coast); stroke-width: 1; opacity: 0.35; }
 #map .grat { stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 6; }
-#map .gl { font: 400 14px var(--font-mono); fill: var(--muted); letter-spacing: 0.04em; }
+#map .gl { font: 400 13px var(--font-mono); fill: var(--muted); letter-spacing: 0.04em; }
 #map .ls { font: italic 400 16px var(--font-body); fill: var(--coast); letter-spacing: 0.08em; }
 #map .lc { font: 600 19px var(--font-display); fill: var(--muted); letter-spacing: 0.24em; }
 #map .lm { font: 500 13px var(--font-mono); fill: var(--muted); letter-spacing: 0.18em; opacity: 0.6; }
@@ -177,43 +187,47 @@ h1 { font: 700 clamp(48px, 7.4vw, 96px)/0.9 var(--font-display); letter-spacing:
 .lbl.b { top: 26px; left: 50%; transform: translateX(-50%); }
 .lbl.bl { top: 26px; right: 0; }
 .stn:hover .lbl { border-color: var(--fg); }
-.jcount { position: absolute; z-index: 2; top: 12px; right: 12px; display: flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; background: var(--bg); border: 1px solid var(--line); border-radius: 2px; }
-.ring { position: relative; width: 40px; height: 40px; flex: none; }
-.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-.ring .rb { fill: none; stroke: var(--line); stroke-width: 3; }
-.ring .rf { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset .6s ease; }
-.ring span { position: absolute; inset: 0; display: grid; place-items: center; font: 500 11px/1 var(--font-mono); }
-.jc-t b { display: block; font: 600 15px/1.15 var(--font-body); }
-.jc-t span { display: block; font: 400 11px/1.3 var(--font-mono); color: var(--muted); }
-.jcard { position: absolute; z-index: 2; left: 12px; bottom: 12px; width: min(272px, 46%); padding: 14px 16px; background: var(--bg); border: 1px solid var(--fg); border-radius: 2px; }
-.jcard.in { animation: cardin .45s ease; }
+
+/* stepper under the map */
+.jsteps { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.jtrack { position: absolute; left: 12.5%; right: 12.5%; top: 22px; height: 2px; background: var(--line); pointer-events: none; }
+.jtrack i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); transform-origin: left center; transform: scaleX(0); transition: transform .9s cubic-bezier(.45,0,.25,1); }
+.jstep { position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 15px 4px 12px; background: none; border: 0; color: var(--muted); cursor: pointer; font: inherit; }
+.jstep .sd { position: relative; z-index: 1; width: 14px; height: 14px; margin-bottom: 6px; border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); transition: background-color .3s, border-color .3s, box-shadow .3s; }
+.jstep b { font: 600 13px/1.1 var(--font-body); letter-spacing: 0.06em; text-transform: uppercase; }
+.jstep span:last-child { font: 400 11px/1.2 var(--font-mono); }
+.jstep.done .sd { background: var(--accent); border-color: var(--accent); }
+.jstep.cur .sd { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 22%, transparent); }
+.jstep.done, .jstep.cur { color: var(--fg); }
+.jstep.cur b { color: var(--accent); }
+.jstep:hover b { color: var(--accent); }
+.jstep:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+/* details of the current stop */
+.jcard { display: flex; align-items: flex-start; gap: 16px; min-height: 104px; padding: 14px 18px 16px; border-top: 1px solid var(--line); background: color-mix(in srgb, var(--accent) 5%, var(--bg)); border-radius: 0 0 4px 4px; }
+.jc-main { min-width: 0; flex: 1; }
+.jcard.in .jc-main { animation: cardin .45s ease; }
 @keyframes cardin { from { opacity: 0; transform: translateY(6px); } }
 .m-when { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font: 500 11px/1.4 var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
 .now { display: inline-block; font: 600 10px/1 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 6px; background: var(--accent); color: var(--on-accent); border-radius: 2px; vertical-align: middle; }
-.jcard h3 { margin-top: 6px; font: 600 21px/1.08 var(--font-display); letter-spacing: 0.01em; text-wrap: balance; }
-.m-org { margin-top: 4px; font-size: 14px; }
-.m-xy { margin-top: 8px; font: 400 11px/1.3 var(--font-mono); color: var(--muted); white-space: pre; }
-.jbar { margin-top: 10px; height: 3px; background: var(--line); border-radius: 2px; overflow: hidden; }
-.jbar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); transform-origin: left center; transform: scaleX(0); }
-.jctl { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
-.jhint { margin-left: 4px; font: 400 12px/1.4 var(--font-mono); color: var(--muted); }
-@media (max-width: 860px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } }
+.jcard h3 { margin-top: 5px; font: 600 23px/1.08 var(--font-display); letter-spacing: 0.01em; }
+.m-org { margin-top: 3px; font-size: 14px; color: var(--muted); }
+.m-xy { flex: none; padding-top: 2px; font: 400 11px/1.5 var(--font-mono); color: var(--muted); text-align: right; }
+@media (max-width: 1080px) and (min-width: 861px) { .hact { gap: 14px; } }
+@media (max-width: 860px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } .journey { margin-top: 8px; } }
 @media (max-width: 640px) {
   #map text, #map .minor-g { display: none; }
   .stn { width: 22px; height: 22px; margin: -11px 0 0 -11px; }
   .stn .dot { left: 6px; top: 6px; width: 10px; height: 10px; }
   .stn .nx { left: -4px; top: -4px; width: 30px; height: 30px; }
-  .lbl { padding: 2px 5px; }
-  .lbl b { font-size: 10px; }
-  .lbl i { font-size: 9px; }
-  .lbl.r { left: 20px; }
-  .lbl.b, .lbl.bl { top: 20px; }
-  .jcount { top: 6px; right: 6px; gap: 6px; padding: 3px 8px 3px 3px; }
-  .ring { width: 30px; height: 30px; }
-  .ring span { font-size: 9px; }
-  .jc-t b { font-size: 12px; }
-  .jc-t span { font-size: 10px; }
-  .jcard { position: static; width: auto; margin-top: 10px; }
+  .lbl { display: none; }
+  .jhead { padding: 8px 10px 8px 12px; }
+  .jstep b { font-size: 11px; letter-spacing: 0.03em; }
+  .jstep { padding: 13px 2px 10px; }
+  .jtrack { top: 20px; }
+  .jcard { padding: 12px 14px 14px; }
+  .jcard h3 { font-size: 20px; }
+  .m-xy { display: none; }
 }
 
 .hero .stats { margin-top: clamp(40px, 6vw, 64px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr); gap: 16px; align-items: stretch; }
@@ -781,7 +795,7 @@ a.cc-row:hover { transform: translateX(3px); }
 @media (max-width: 600px) { .dvs { grid-template-columns: minmax(0, 1fr); } }
 
 @media (prefers-reduced-motion: reduce) { .fd-bld .fl { transition: none; } }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .stn.cur::after { display: none; } .jcard.in { animation: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .stn.cur::after { display: none; } .jcard.in .jc-main { animation: none; } .jtrack i { transition: none; } }
 </style>
 </head>
 <body>
@@ -811,6 +825,7 @@ a.cc-row:hover { transform: translateX(3px); }
       <h1>Mahmoud Ahmed Hamed</h1>
       <p class="lede">Digital Delivery Engineer certified by <strong>BSI in ISO 19650</strong> and by <strong>Autodesk in Revit for Structural Design</strong>.</p>
       <p class="lede lede2">Model coordination, information management and automation, delivered on building and bridge projects across the United Arab Emirates, Saudi Arabia and Egypt.</p>
+      <div class="hact">
       <ul class="social" aria-label="Contact links">
         <li><a href="https://www.linkedin.com/in/mahmoud-bim" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M8 10.5v6M12 16.5v-6M12 13.2c0-1.6 1-2.7 2.4-2.7s2.1 1 2.1 2.6v3.4"></path><circle cx="8" cy="7.4" r="0.6" class="fill"></circle></svg></a></li>
         <li><a href="https://wa.me/971503377402" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.5-4.3A8.5 8.5 0 1 1 20.5 11.6z"></path><path d="M9.2 8.4c.3-.4.7-.5 1-.3l.9 1.9c.1.3 0 .6-.2.8l-.5.5c.6 1.2 1.6 2.2 2.8 2.8l.5-.5c.2-.2.5-.3.8-.2l1.9.9c.2.3.1.7-.3 1-1 .6-2.4.6-3.7-.1-1.5-.8-2.8-2.1-3.6-3.6-.7-1.3-.7-2.6.4-3.2z"></path></svg></a></li>
@@ -820,29 +835,26 @@ a.cc-row:hover { transform: translateX(3px); }
         <a class="btn primary" href="https://drive.google.com/file/d/1a4F2g-E8iaE_cFlScax-J90SgH0sexvU/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Open portfolio <span class="arr">&nearr;</span></a>
         <a class="btn" href="https://drive.google.com/file/d/1FnYCQkzrOsFJDPt2YDcxmGPVXWVuF7a2/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Open CV <span class="arr">&nearr;</span></a>
       </div>
+      </div>
     </div>
     <div class="journey">
-      <div class="mapbox">
-        <div class="mapart">
-          <svg id="map" viewBox="0 0 1000 541" role="img" aria-labelledby="map-title"><title id="map-title">Career route: Mansoura and Cairo in Egypt, Riyadh in Saudi Arabia, Dubai in the UAE</title></svg>
-          <div class="stations" id="stations"></div>
-          <div class="jcount" aria-hidden="true">
-            <div class="ring"><svg viewBox="0 0 40 40"><circle class="rb" cx="20" cy="20" r="16"></circle><circle class="rf" id="ring" cx="20" cy="20" r="16"></circle></svg><span id="rn">1/4</span></div>
-            <div class="jc-t"><b>Stations</b><span>2022 &rarr; now</span></div>
-          </div>
-        </div>
-        <div class="jcard" id="jcard" aria-live="polite">
+      <div class="jhead">
+        <span class="jt"><i aria-hidden="true"></i>Career route</span>
+        <span class="jr">2022 &rarr; now</span>
+        <button class="jplay" type="button" id="jplay" aria-pressed="true" aria-label="Pause the route"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="ps" d="M5 3.5v9M11 3.5v9"></path><path class="pl" d="M5 3l8 5-8 5z"></path></svg></button>
+      </div>
+      <div class="mapart">
+        <svg id="map" viewBox="100 0 900 430" role="img" aria-labelledby="map-title"><title id="map-title">Career route: Mansoura and Cairo in Egypt, Riyadh in Saudi Arabia, Dubai in the UAE</title></svg>
+        <div class="stations" id="stations"></div>
+      </div>
+      <div class="jsteps" id="jsteps"><span class="jtrack" aria-hidden="true"><i id="jfill"></i></span></div>
+      <div class="jcard" id="jcard" aria-live="polite">
+        <div class="jc-main">
           <p class="m-when"><span id="m-when">Jan 2022</span><span aria-hidden="true">&middot;</span><span id="m-place">Mansoura, Egypt</span><span class="now" id="m-now" hidden>Now</span></p>
           <h3 id="m-role">Graduated in Civil Engineering</h3>
           <p class="m-org" id="m-org">Delta Higher Institute for Engineering and Technology</p>
-          <p class="m-xy" id="m-xy">31.04&deg;N  31.38&deg;E</p>
         </div>
-      </div>
-      <div class="jctl">
-        <button class="cp" type="button" id="jprev">&larr; Prev</button>
-        <button class="cp" type="button" id="jnext">Next &rarr;</button>
-        <button class="cp" type="button" id="jplay" aria-pressed="true">Pause</button>
-        <span class="jhint">Select a city to jump to it.</span>
+        <p class="m-xy" id="m-xy">31.04&deg;N<br>31.38&deg;E</p>
       </div>
     </div>
   </div>
@@ -1512,7 +1524,7 @@ a.cc-row:hover { transform: translateX(3px); }
   if (!svg) return;
   var NS = 'http://www.w3.org/2000/svg';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W = 1000, H = 541, LON0 = 25, LAT1 = 33.8, K = 34.23, CX = 0.8988;
+  var W = 1000, H = 541, VX = 100, VY = 0, VW = 900, VH = 430, LON0 = 25, LAT1 = 33.8, K = 34.23, CX = 0.8988;
   function P(lon, lat) { return [ +((lon - LON0) * CX * K).toFixed(1), +((LAT1 - lat) * K).toFixed(1) ]; }
   function el(tag, attrs, parent) {
     var e = document.createElementNS(NS, tag);
@@ -1542,12 +1554,12 @@ a.cc-row:hover { transform: translateX(3px); }
   [30, 35, 40, 45, 50, 55].forEach(function (lon) {
     var x = P(lon, 0)[0];
     el('line', { x1: x, y1: 0, x2: x, y2: H, 'class': 'grat' });
-    el('text', { x: x + 5, y: 18, 'class': 'gl' }).textContent = lon + '°E';
+    el('text', { x: x + 5, y: VY + 18, 'class': 'gl' }).textContent = lon + '°E';
   });
   [20, 25, 30].forEach(function (lat) {
     var y = P(0, lat)[1];
     el('line', { x1: 0, y1: y, x2: W, y2: y, 'class': 'grat' });
-    el('text', { x: 8, y: y - 6, 'class': 'gl' }).textContent = lat + '°N';
+    el('text', { x: VX + 8, y: y - 6, 'class': 'gl' }).textContent = lat + '°N';
   });
 
   el('path', { d: line([[32.9,24.09],[32.6,23.5],[32.3,22.8],[31.6,22.0],[31.3,21.5]]), 'class': 'nile lake' });
@@ -1560,30 +1572,30 @@ a.cc-row:hover { transform: translateX(3px); }
     if (rot) t.setAttribute('transform', 'rotate(' + rot + ' ' + p[0] + ' ' + p[1] + ')');
     t.textContent = txt;
   }
-  label('Mediterranean Sea', 28.9, 32.75, 'ls');
+  label('Mediterranean Sea', 31.0, 32.6, 'ls');
   label('Red Sea', 35.6, 25.8, 'ls', 59);
   label('Arabian Gulf', 52.0, 26.7, 'ls', 22);
-  label('EGYPT', 28.3, 26.8, 'lc');
-  label('SAUDI ARABIA', 45.5, 21.5, 'lc');
-  label('UAE', 52.3, 23.2, 'lc');
-  label('IRAQ', 44.5, 32.6, 'lm');
+  label('EGYPT', 29.9, 27.0, 'lc');
+  label('SAUDI ARABIA', 42.0, 22.4, 'lc');
+  label('UAE', 51.6, 23.6, 'lc');
+  label('IRAQ', 43.4, 32.3, 'lm');
   label('IRAN', 53.5, 29.3, 'lm');
 
   function icon(d, x, y, s) { el('path', { d: d, 'class': 'icon', transform: 'translate(' + x + ' ' + y + ') scale(' + (s || 1) + ')' }); }
   icon('M0,-8 L14,-14 L28,-8 L14,-2 Z M6,-5.5 V1 Q14,5 22,1 V-5.5 M28,-8 V0', 146, 72);
-  icon('M-4,0 H54 M0,0 L17,-17 L34,0 M17,-17 L20,0 M26,0 L38,-11 L50,0', 64, 152);
+  icon('M-4,0 H54 M0,0 L17,-17 L34,0 M17,-17 L20,0 M26,0 L38,-11 L50,0', 126, 268);
   icon('M0,0 C2,-30 6,-54 12,-62 C18,-54 22,-30 24,0 Z M5.5,-36 Q12,-56 18.5,-36 Z M-14,0 V-12 H-6 V0 M28,0 V-16 H36 V0 M-18,0 H40', 690, 306, 0.82);
   icon('M0,0 V-14 H3 V-26 H5 V-40 H6.5 L7,-62 L7.5,-40 H9 V-26 H11 V-14 H14 V0 Z M-8,0 V-10 H-3 V0 M18,0 V-18 H24 V0 M-12,0 H28', 948, 300);
 
-  var nb = el('g', { 'class': 'minor-g', transform: 'translate(976 528)' });
+  var nb = el('g', { 'class': 'minor-g', transform: 'translate(980 422)' });
   el('path', { d: 'M0,0 V-34 M-6,-24 L0,-36 L6,-24 Z', 'class': 'icon' }, nb);
   el('text', { x: 0, y: -42, 'class': 'gl', 'text-anchor': 'middle' }, nb).textContent = 'N';
-  var sb = el('g', { 'class': 'minor-g', transform: 'translate(796 524)' });
+  var sb = el('g', { 'class': 'minor-g', transform: 'translate(676 418)' });
   el('path', { d: 'M0,0 H154 M0,-6 V6 M77,-4 V4 M154,-6 V6', 'class': 'icon' }, sb);
   el('rect', { x: 0, y: -3, width: 77, height: 6, 'class': 'sbar' }, sb);
   el('text', { x: 0, y: -12, 'class': 'gl', 'text-anchor': 'middle' }, sb).textContent = '0';
   el('text', { x: 77, y: -12, 'class': 'gl', 'text-anchor': 'middle' }, sb).textContent = '250';
-  el('text', { x: 154, y: -12, 'class': 'gl', 'text-anchor': 'middle' }, sb).textContent = '500 km';
+  el('text', { x: 160, y: -12, 'class': 'gl', 'text-anchor': 'end' }, sb).textContent = '500 km';
 
   var S = [
     { city: 'Mansoura', country: 'Egypt', lon: 31.38, lat: 31.04, yr: '2022', when: 'Jan 2022', role: 'Graduated in Civil Engineering', org: 'Delta Higher Institute for Engineering and Technology', side: 'r' },
@@ -1617,19 +1629,28 @@ a.cc-row:hover { transform: translateX(3px); }
     var b = document.createElement('button');
     b.type = 'button';
     b.className = 'stn';
-    b.style.left = (s.p[0] / W * 100) + '%';
-    b.style.top = (s.p[1] / H * 100) + '%';
+    b.style.left = ((s.p[0] - VX) / VW * 100) + '%';
+    b.style.top = ((s.p[1] - VY) / VH * 100) + '%';
     b.setAttribute('aria-label', s.when + ', ' + s.city + ', ' + s.country + ': ' + s.role);
     b.innerHTML = '<svg class="nx" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="15"></circle></svg><span class="dot"></span><span class="lbl ' + s.side + '"><b>' + s.city + '</b><i>' + s.yr + '</i></span>';
     b.addEventListener('click', function () { stopPlay(); go(i); });
     box.appendChild(b);
     return b;
   });
+  var stepBox = document.getElementById('jsteps'), fill = document.getElementById('jfill');
+  var steps = S.map(function (s, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'jstep';
+    b.setAttribute('aria-label', s.city + ', ' + s.yr + ': ' + s.role);
+    b.innerHTML = '<span class="sd"></span><b>' + s.city + '</b><span>' + s.yr + '</span>';
+    b.addEventListener('click', function () { stopPlay(); go(i); });
+    stepBox.appendChild(b);
+    return b;
+  });
 
   var card = document.getElementById('jcard');
   var q = function (id) { return document.getElementById(id); };
-  var ring = q('ring'), CIRC = 2 * Math.PI * 16;
-  if (ring) ring.style.strokeDasharray = CIRC + ' ' + CIRC;
   var cur = 0, curLen = 0, raf = 0, timer = 0, playing = !reduce, visible = true;
 
   function setP(len) {
@@ -1644,10 +1665,14 @@ a.cc-row:hover { transform: translateX(3px); }
     q('m-place').textContent = s.city + ', ' + s.country;
     q('m-role').textContent = s.role;
     q('m-org').textContent = s.org;
-    q('m-xy').textContent = s.lat.toFixed(2) + '°N  ' + s.lon.toFixed(2) + '°E';
+    q('m-xy').innerHTML = s.lat.toFixed(2) + '°N<br>' + s.lon.toFixed(2) + '°E';
     q('m-now').hidden = !s.now;
-    q('rn').textContent = (i + 1) + '/' + n;
-    if (ring) ring.style.strokeDashoffset = String(CIRC * (1 - (i + 1) / n));
+    if (fill) fill.style.transform = 'scaleX(' + (i / (n - 1)) + ')';
+    steps.forEach(function (b, j) {
+      b.classList.toggle('done', j < i);
+      b.classList.toggle('cur', j === i);
+      if (j === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+    });
     card.classList.remove('in'); void card.offsetWidth; card.classList.add('in');
     btns.forEach(function (b, j) {
       b.classList.toggle('done', j < i);
@@ -1689,16 +1714,14 @@ a.cc-row:hover { transform: translateX(3px); }
   var playBtn = q('jplay');
   function syncPlay() {
     if (!playBtn) return;
-    playBtn.textContent = playing ? 'Pause' : 'Play';
     playBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    playBtn.setAttribute('aria-label', playing ? 'Pause the route' : 'Play the route');
   }
   function stopPlay() { playing = false; syncPlay(); clearTimeout(timer); barReset(); }
   if (playBtn) playBtn.addEventListener('click', function () {
     playing = !playing; syncPlay();
     if (playing) go(cur === n - 1 ? 0 : cur + 1); else { clearTimeout(timer); barReset(); }
   });
-  q('jprev').addEventListener('click', function () { stopPlay(); go(cur - 1); });
-  q('jnext').addEventListener('click', function () { stopPlay(); go(cur + 1); });
   document.addEventListener('visibilitychange', schedule);
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible) schedule(); else clearTimeout(timer); }).observe(svg);
